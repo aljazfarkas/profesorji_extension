@@ -46,7 +46,7 @@ async function postGrade (
       break
   }
 
-  //Pošljemo link
+  //Določimo link
   var currentLink =
     'http://profesorji.net/profesor/' +
     faculty +
@@ -56,7 +56,6 @@ async function postGrade (
     formattedTeacher
   //Pošljemo oceno
   var currentGrade = await makeRequest(currentLink)
-  console.log(currentGrade)
   //Zamenjamo ime in priimek in poskusimo še enkrat
   if (currentGrade == 'Ni ocene') {
     //V linku je ime profesorja v sedmem delu stringa, splitanega z '/'
@@ -83,6 +82,7 @@ async function postGrade (
       currentLink =
         currentLink.substring(0, currentLink.length - name.length) + surname
       currentGrade = await makeRequest(currentLink)
+      //Če na koncu še vedno nima ocene, bo link preusmeril na ustvarjanje novega profesorja
       if (currentGrade == 'Ni ocene') {
         currentLink =
           'http://profesorji.net/faculties/' +
@@ -91,7 +91,6 @@ async function postGrade (
           programme +
           '/lectureships/new'
       }
-      //Če na koncu še vedno nima ocene, bo link preusmeril na ustvarjanje novega profesorja
     }
   }
   port.postMessage({
