@@ -1,0 +1,39 @@
+{
+    "manifest_version": 2,
+    "name": "profesorji.net extension",
+    "description": "Ta extension bo pobral ocene z www.profesorji.net in jih injectal v UM eŠtudij",
+    "version": "0.1.0",
+    "icons": {
+        "22": "radko22.png",
+        "128": "radko128.png"
+    },
+    "browser_action": {
+        "default_icon": "radko22.png",
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "scripts": [
+            "./background.js"
+        ]
+    },
+    "content_scripts": [
+        {
+            "run_at": "document_end",
+            "matches": [
+                "https://estudij.um.si/*"
+            ],
+            "js": [
+                "./inject.js"
+            ],
+            "css": [
+                "./mystyles.css"
+            ]
+        }
+    ],
+    "options_page": "./options.html",
+    "permissions": [
+        "tabs",
+        "https://estudij.um.si/*",
+        "http://profesorji.net/*"
+    ]
+}
